@@ -4,11 +4,13 @@ import {NextFunction, Request, Response} from 'express';
 import {systemConfig} from './config';
 const app = express();
 
-app.get("/", function (req:Request, res:Response, next:NextFunction) {
-  fs.readFile("/file-does-not-exist", function (err, data) {
+app.get("/download", function (req:Request, res:Response, next:NextFunction) {
+  fs.readFile("./readFile.txt", function (err, data) {
     if (err) {
+      console.log(err)
       next(err); // Pass errors to Express.
     } else {
+      res.setHeader("Content-Disposition", "attachment;filename=download.csv");
       res.send(data);
     }
   });
